@@ -338,11 +338,17 @@ void SSD1306::OLEDBufferScreen(int16_t x, int16_t y, uint8_t w, uint8_t h, uint8
 void SSD1306::drawPixel(int16_t x, int16_t y, uint8_t color)
 {
 
-	if ((x < 0) || (x >= this->bufferWidth) || (y < 0) || (y >= this->bufferHeight)) {
-	return;
+	uint8_t rotation = getRotation();
+	if(rotation == 0 || rotation == 2) {
+		if ((x < 0) || (x >= this->bufferWidth) || (y < 0) || (y >= this->bufferHeight)) {
+		return;
+		}
+	} else {
+		if ((x < 0) || (x >= this->bufferHeight) || (y < 0) || (y >= this->bufferWidth)) {
+		return;
+		}
 	}
 	int16_t temp;
-	uint8_t rotation = getRotation();
 	switch (rotation) {
 	case 1:
 		temp = x;
